@@ -27,7 +27,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - name: Cypress run
-      uses: cypress-io/github-action@6
+      uses: cypress-io/github-action@v6
       with:
         command: yarn cy :run
         start: yarn start
