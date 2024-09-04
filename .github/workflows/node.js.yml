@@ -5,13 +5,12 @@ name: Node.js CI/CD para React com Vercel
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   pull_request:
-    branches: [ "main" ]
+    branches: ["main"]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
@@ -20,25 +19,25 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v4
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v4
-      with:
-        node-version: ${{ matrix.node-version }}
-        cache: 'npm'
-    - name: Cypress run
-      uses: cypress-io/github-action@v6
-      with:
-        command: yarn cy :run
-        start: yarn start
-      env:
-        CI: false
+      - uses: actions/checkout@v4
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: "npm"
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          command: yarn cy:run
+          start: yarn start
+        env:
+          CI: false
 
-    - name: Install Vercel CLI
-      run: npm install --global vercel@latest
-    - name: Pull Vercel Environment Information
-      run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
-    - name: Build Projects Artifacts
-      run: vercel build --prod --tokens=${{ secrets.VERCEL_TOKEN }}
-    - name: Deploy Project Artifacts To Vercel
-      run: vercel deploy --prebuilt --prod --tokens=${{ secrets.VERCEL_TOKEN }}
+      - name: Install Vercel CLI
+        run: npm install --global vercel@latest
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Projects Artifacts
+        run: vercel build --prod --tokens=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts To Vercel
+        run: vercel deploy --prebuilt --prod --tokens=${{ secrets.VERCEL_TOKEN }}
